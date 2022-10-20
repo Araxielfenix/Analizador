@@ -1,0 +1,43 @@
+<!-- HTML5 -->
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="script.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mensajes ISO</title>
+  </head>
+
+  <body>
+    <div id = "iso05">
+        <textarea type="text" class="txtarea" id = "mensajeIso"></textarea>
+        <p></p>
+        <a class="my-button" href="#" onclick="analizarIso05()">Analizar</a>
+    </div>
+    <p></p>
+    <div id = "respuesta">
+      <div>
+        <input type="text" class="txtinput" id = "codigo1" placeholder="Código (0200)">
+        <input type="text" class="txtinput" id = "codigo2" placeholder="Código (0210)">
+      </div>
+      <p></p>
+      <input type="text" class="txtinput" id = "cuatrillave" placeholder="Cuatrillave">
+      <p></p>
+      <input type="text" class="txtinput" id = "tarjeta" placeholder="Tarjeta">
+      <p></p>
+      <div>
+        <input type="text" class="txtinput" id="nombreComercio" placeholder="Comercio" style="width: 274px;">
+        <input type="text" class="txtinput" id="numeroComercio" placeholder="Numero de comercio" style="width: 70px;">
+      </div>
+      <p></p>
+      <div>
+        <input type="date" class="txtinput" id = "fecha" placeholder="Fecha">
+        <p> </p>
+        <div>
+          <a>Primer hora  </a><input type="time" class="txtinput" id = "hora1" placeholder="Hora">
+          <a>Segunda hora  </a><input type="time" class="txtinput" id = "hora2" placeholder="Hora">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
