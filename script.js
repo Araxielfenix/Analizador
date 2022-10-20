@@ -1,7 +1,10 @@
 function analizarIso05() {
     // Obtener el texto del textarea "mensajeIso" y guardarlo en la variable "IsoMsg".
     var IsoMsg = document.getElementById("mensajeIso").value;
-    // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
+    // Get the length of the string
+    var IsoMsgLen = IsoMsg.length;
+    if(IsoMsgLen >= 1267){
+        // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
     var IsoMsgSplit = IsoMsg.split(" ");
     var codigo1 = IsoMsgSplit[17].substring(16, 20);
     var codigo2 = IsoMsgSplit[108].substring(16, 20);
@@ -42,4 +45,8 @@ function analizarIso05() {
     document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
     // Set hour and minutes to field "hora2".
     document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
+    }
+    else{
+        alert("El mensaje ISO no tiene la longitud correcta");
+    }
 }
