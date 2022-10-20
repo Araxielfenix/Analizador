@@ -4,7 +4,7 @@ function analizarIso05() {
     // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
     var IsoMsgSplit = IsoMsg.split(" ");
     var codigo1 = IsoMsgSplit[17].substring(16, 20);
-    var codigo2 = IsoMsgSplit[17].substring(16, 20);
+    var codigo2 = IsoMsgSplit[108].substring(16, 20);
     var cuatriLlave;
     var long1 = IsoMsgSplit[17].substring(20, 22);
     var long2 = IsoMsgSplit[17].substring(22, 24);
@@ -15,15 +15,24 @@ function analizarIso05() {
     var hora1 = IsoMsgSplit[17].substring(58, 64);
     var hora2 = IsoMsgSplit[17].substring(70, 76);
     var tarjeta = IsoMsgSplit[17].substring(106, 124);
+    var folio = IsoMsgSplit[17].substring(148, 157);
+    var monto = IsoMsgSplit[17].substring(41, 54);
     var numeroComercio = IsoMsgSplit[36].substring(8, 15);
     var nombreComercio = IsoMsgSplit[26] + " " + IsoMsgSplit[27] + " " + IsoMsgSplit[30];
+
+    // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
+    monto = monto / 100;
 
     document.getElementById("codigo1").value = codigo1;
     document.getElementById("codigo2").value = codigo2;
     document.getElementById("cuatrillave").value = cuatriLlave;
     document.getElementById("tarjeta").value = tarjeta;
     document.getElementById("numeroComercio").value = numeroComercio;
+    document.getElementById("numeroComercio").style.width = "70px";
     document.getElementById("nombreComercio").value = nombreComercio;
+    document.getElementById("nombreComercio").style.width = "274px;";
+    document.getElementById("folio").value = folio;
+    document.getElementById("monto").value = "$" + monto;
     // get current year.
     var today = new Date();
     today.getUTCFullYear();
