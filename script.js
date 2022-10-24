@@ -7,8 +7,17 @@ function analizarIso05() {
     // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
     var IsoMsgSplit = IsoMsg.split(" ");
     var IsoMsgSplitKey = IsoMsg.split("]");
+    var IsoMsgSplitStar = IsoMsg.split("*");
     var IsoMsgSplitCh = IsoMsgSplitKey[7].split("");
     var IsoMsgSplitCh2 = IsoMsgSplitKey[14].split("");
+   
+    //Analiza la variable IsoMsgSplitStar a partir de la posición 1 y si encuentra un numero, guarda el valor de IsoMsgSplitStar de la posición encontrada en la variable "IsoMsgSplitCh3".
+    for(var i=2; i<IsoMsgSplitStar.length; i++){
+        if(IsoMsgSplitStar[i].match(/[A-Z]/i)){
+            var IsoMsgSplitCh3 = IsoMsgSplitStar[i].match(/[A-Z]/i);
+        }
+    }
+    console.log(IsoMsgSplitCh3[20]);
     // Delete spaces in the array "IsoMsgSplitch".
     for(var i = 0; i < IsoMsgSplitCh.length; i++){
         if(IsoMsgSplitCh[i] == " "){
@@ -39,8 +48,15 @@ function analizarIso05() {
     for(var i = 0; i< 12; i++){
         monto += IsoMsgSplitCh[38 + i];
     }
-    var numeroComercio = IsoMsgSplit[36].substring(8, 15);
-    var nombreComercio = IsoMsgSplit[26] + " " + IsoMsgSplit[27] + " " + IsoMsgSplit[30];
+    //Por cada 23 caracteres, si es un " ", se almacenará en la variable "IsoMsgSplitCom".
+    var IsoMsgSplitCom = IsoMsg.match(/.{1,22}/g);
+    console.log(IsoMsgSplitCom);
+    
+    var nombreComercio = IsoMsgSplitCom[12].substring(1, IsoMsgSplitCom[12].length) + IsoMsgSplitCom[13];    
+    var numeroComercio = IsoMsgSplitCom[11].substring(7, 16);
+
+    // nombreComercio = nombreComercio.split("0");
+    // nombreComercio = nombreComercio[0];
 
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
