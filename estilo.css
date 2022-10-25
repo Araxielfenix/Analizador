@@ -1,3 +1,28 @@
+/* Mediaquery for mobile */
+@media (min-width:480px) {
+  #respuesta{
+    zoom: 2;
+  }
+  #navBar{
+    zoom: 1.5;
+  }
+  a.my-button{
+    zoom: 2.3;
+  }
+}
+/* Mediaquery for PC */
+@media (min-width:1281px) {
+  #respuesta{
+    zoom: 0;
+  }
+  #navBar{
+    zoom: 0;
+  }
+  a.my-button{
+    zoom: 0;
+  }
+}
+
 html {
   background-color: ghostwhite;
 }
@@ -61,4 +86,34 @@ a.my-button:active {
 }
 #numeroComercio{
   width: 80px;
+}
+#navBar{
+  /* Translucid navBar with horizontal gradient blue and purple. */
+  background: linear-gradient(to right, #196bca, #6433e0);
+  background-color: #196bca;
+  color: #fff;
+  font-family: Lucida Console;
+  font-size: 18px;
+  font-weight: 800;
+  font-style: normal;
+  text-decoration: none;
+  padding: 14px 15px;
+  border: 0px solid #000;
+  border-radius: 10px;
+  display: inline-block;
+}
+#githubLogo{
+  width: 40px;
+  height: 40px;
+  margin: 0px 0px -4px 0px;
+  padding: 0px 0px 0px 0px;
+  border: 0px solid #000;
+  border-radius: 0px;
+  display: inline-block;
+}
+#afGithub{
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  vertical-align: super;
 }
