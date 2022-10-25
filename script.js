@@ -179,6 +179,5 @@ function analizarIso05() {
             document.getElementById("respuesta").style.filter = "blur(0px)";
             document.getElementById("navBar").style.filter = "blur(0px)";
         }, 1500);
-        alert("El mensaje ISO no es valido.");
     }
 }
