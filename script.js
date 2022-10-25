@@ -179,6 +179,5 @@ function analizarIso05() {
             document.getElementById("respuesta").style.filter = "blur(0px)";
             document.getElementById("navBar").style.filter = "blur(0px)";
         }, 2000);
-        console.log("Algo pasó.");
     }
 }
