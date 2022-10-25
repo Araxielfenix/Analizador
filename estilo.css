@@ -9,6 +9,12 @@
   a.my-button{
     zoom: 2.3;
   }
+  #alerta {
+    height: 22rem;
+    width: 45rem;
+    font-size: 50px;
+    margin: 20% 13%;
+  }
 }
 /* Mediaquery for PC */
 @media (min-width:1281px) {
@@ -20,6 +26,9 @@
   }
   a.my-button{
     zoom: 0;
+  }
+  #alerta{
+    margin: 10% 24%;
   }
 }
 
@@ -116,4 +125,25 @@ a.my-button:active {
   text-decoration: none;
   font-size: 1.5rem;
   vertical-align: super;
+}
+#alerta{
+  display: none;
+  border-radius: 50px;
+  text-align: center;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  position: absolute;
+  text-align-last: center;
+  z-index: 1;
+  background-color: rgb(237 237 237 / 50%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+#alertaTexto{
+  width: 93%;
+  margin: 1.5em auto;
+  font-family: Lucida Console;
+  font-size: 48px;
 }

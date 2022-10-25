@@ -167,6 +167,18 @@ function analizarIso05() {
     document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
     }
     else{
-        alert("No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.");
+        // Change display to block to show the error message.
+        document.getElementById("alerta").style.display = "block";
+        document.getElementById("iso05").style.filter = "blur(5px)";
+        document.getElementById("respuesta").style.filter = "blur(5px)";
+        document.getElementById("navBar").style.filter = "blur(5px)";
+        // Countdown one second to hide the error message.
+        setTimeout(function(){
+            document.getElementById("alerta").style.display = "none";
+            document.getElementById("iso05").style.filter = "blur(0px)";
+            document.getElementById("respuesta").style.filter = "blur(0px)";
+            document.getElementById("navBar").style.filter = "blur(0px)";
+        }, 1500);
+
     }
 }
