@@ -15,6 +15,12 @@
     font-size: 50px;
     margin: 20% 13%;
   }
+  #inputAlerta{
+    margin: 2em;
+    width: 89%;
+    font-size: 40px;
+    height: 100%;
+  }
 }
 /* Mediaquery for PC */
 @media (min-width:1281px) {
@@ -29,6 +35,11 @@
   }
   #alerta{
     margin: 10% 24%;
+  }
+  #inputAlerta{
+    margin: 7em;
+    width: 88%;
+    font-size: 20px;
   }
 }
 
@@ -148,16 +159,13 @@ a.my-button:active {
   font-size: 48px;
 }
 #inputAlerta{
-  margin: 7em;
-    width: 88%;
-    border: transparent;
-    background: transparent;
-    font-size: 20px;
-    resize: none;
-    border-radius: 50px;
-    text-align: center;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
+  border: transparent;
+  background: transparent;
+  resize: none;
+  border-radius: 50px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
