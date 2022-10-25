@@ -147,3 +147,17 @@ a.my-button:active {
   font-family: Lucida Console;
   font-size: 48px;
 }
+#inputAlerta{
+  margin: 7em;
+    width: 88%;
+    border: transparent;
+    background: transparent;
+    font-size: 20px;
+    resize: none;
+    border-radius: 50px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
