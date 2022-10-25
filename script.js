@@ -1,3 +1,4 @@
+var datos = "";
 function analizarIso05() {
     // Obtener el texto del textarea "mensajeIso" y guardarlo en la variable "IsoMsg".
     var IsoMsg = document.getElementById("mensajeIso").value;
@@ -71,6 +72,9 @@ function analizarIso05() {
     document.getElementById("nombreComercio").style.width = "274px;";
     document.getElementById("folio").value = folio;
     document.getElementById("monto").value = "$" + monto;
+    document.getElementById("botonCopiar").style.display = "inline-block";
+    datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: " + monto + "\n";
+    datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
     // get current year.
     var today = new Date();
     today.getUTCFullYear();
@@ -156,6 +160,9 @@ function analizarIso05() {
     document.getElementById("nombreComercio").style.width = "274px;";
     document.getElementById("folio").value = folio;
     document.getElementById("monto").value = "$" + monto;
+    document.getElementById("botonCopiar").style.display = "inline-block";
+    datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: " + monto + "\n";
+    datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
     // get current year.
     var today = new Date();
     today.getUTCFullYear();
@@ -180,4 +187,9 @@ function analizarIso05() {
             document.getElementById("navBar").style.filter = "blur(0px)";
         }, 2000);
     }
+}
+
+function copyToClipboard(){
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(datos);
 }
