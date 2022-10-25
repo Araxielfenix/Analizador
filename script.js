@@ -175,6 +175,8 @@ function analizarIso05() {
     }
     else{
         // Change display to block to show the error message.
+        document.getElementById("inputAlerta").value = "No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.";
+        document.getElementById("inputAlerta").style.color="white";
         document.getElementById("alerta").style.display = "block";
         document.getElementById("iso05").style.filter = "blur(5px)";
         document.getElementById("respuesta").style.filter = "blur(5px)";
@@ -192,4 +194,18 @@ function analizarIso05() {
 function copyToClipboard(){
     // Copy the text inside the text field
     navigator.clipboard.writeText(datos);
+    // Change display to block to show the error message.
+    document.getElementById("inputAlerta").value = "Copiado al portapapeles";
+    document.getElementById("inputAlerta").style.color="white";
+    document.getElementById("alerta").style.display = "block";
+    document.getElementById("iso05").style.filter = "blur(5px)";
+    document.getElementById("respuesta").style.filter = "blur(5px)";
+    document.getElementById("navBar").style.filter = "blur(5px)";
+    // Countdown one second to hide the error message.
+    setTimeout(function(){
+        document.getElementById("alerta").style.display = "none";
+        document.getElementById("iso05").style.filter = "blur(0px)";
+        document.getElementById("respuesta").style.filter = "blur(0px)";
+        document.getElementById("navBar").style.filter = "blur(0px)";
+    }, 2000);
 }
