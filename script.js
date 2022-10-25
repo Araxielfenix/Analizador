@@ -11,14 +11,7 @@ function analizarIso05() {
     var IsoMsgSplitStar = IsoMsg.split("*");
     var IsoMsgSplitCh = IsoMsgSplitKey[7].split("");
     var IsoMsgSplitCh2 = IsoMsgSplitKey[14].split("");
-   
-    //Analiza la variable IsoMsgSplitStar a partir de la posición 1 y si encuentra un numero, guarda el valor de IsoMsgSplitStar de la posición encontrada en la variable "IsoMsgSplitCh3".
-    for(var i=2; i<IsoMsgSplitStar.length; i++){
-        if(IsoMsgSplitStar[i].match(/[A-Z]/i)){
-            var IsoMsgSplitCh3 = IsoMsgSplitStar[i].match(/[A-Z]/i);
-        }
-    }
-    console.log(IsoMsgSplitCh3[20]);
+
     // Delete spaces in the array "IsoMsgSplitch".
     for(var i = 0; i < IsoMsgSplitCh.length; i++){
         if(IsoMsgSplitCh[i] == " "){
@@ -32,8 +25,6 @@ function analizarIso05() {
         codigo2 += IsoMsgSplitCh2[12 + i];
     }
     var cuatriLlave;
-    var long1 = IsoMsgSplit[17].substring(20, 22);
-    var long2 = IsoMsgSplit[17].substring(22, 24);
     if(codigo1.substring(0,1) == 0){
         cuatriLlave = 1 + codigo1.substring(1,4) + " " + IsoMsgSplitCh[32] + IsoMsgSplitCh[33] + " " + IsoMsgSplitCh[34] + IsoMsgSplitCh[35] + " " + IsoMsgSplitCh[36] + IsoMsgSplitCh[37];
     }
@@ -42,22 +33,24 @@ function analizarIso05() {
         fecha += IsoMsgSplitCh[50 + i];
     }
     var hora1 = IsoMsgSplit[17].substring(58, 64);
+    for (var i = 0; i < 6; i++){
+        hora1 += IsoMsgSplitCh[54 + i];
+    }
     var hora2 = IsoMsgSplit[17].substring(70, 76);
+    for (var i = 0; i < 6; i++){
+        hora2 += IsoMsgSplitCh[66 + i];
+    }
     var tarjeta = IsoMsgSplitKey[2].substring(7, 23);
-    var folio = IsoMsgSplit[17].substring(148, 157);
+    var folio = IsoMsgSplitStar[20].substring(3, 12);
     var monto = "";
     for(var i = 0; i< 12; i++){
         monto += IsoMsgSplitCh[38 + i];
     }
     //Por cada 23 caracteres, si es un " ", se almacenará en la variable "IsoMsgSplitCom".
     var IsoMsgSplitCom = IsoMsg.match(/.{1,22}/g);
-    console.log(IsoMsgSplitCom);
     
     var nombreComercio = IsoMsgSplitCom[12].substring(1, IsoMsgSplitCom[12].length) + IsoMsgSplitCom[13];    
     var numeroComercio = IsoMsgSplitCom[11].substring(7, 16);
-
-    // nombreComercio = nombreComercio.split("0");
-    // nombreComercio = nombreComercio[0];
 
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
@@ -108,8 +101,6 @@ function analizarIso05() {
     var codigo1 = IsoMsgSplit[16].substring(16, 20);
     var codigo2 = IsoMsgSplit[99].substring(16, 20);
     var cuatriLlave;
-    var long1 = IsoMsgSplit[17].substring(20, 22);
-    var long2 = IsoMsgSplit[17].substring(22, 24);
     if(codigo1.substring(0,1) == 0){
         cuatriLlave = 1 + codigo1.substring(1,4) + " " + IsoMsgSplitCh[32] + IsoMsgSplitCh[33] + " " + IsoMsgSplitCh[34] + IsoMsgSplitCh[35] + " " + IsoMsgSplitCh[36] + IsoMsgSplitCh[37];
     }
