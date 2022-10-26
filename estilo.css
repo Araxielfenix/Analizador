@@ -80,7 +80,7 @@
   ::-webkit-scrollbar {
     width: 10px;
     background-color: rgb(61, 61, 61);
-    border-radius: 50px;
+    border-radius: 10px;
   }
 }
 /* Tema blanco */
@@ -94,6 +94,12 @@
   }
   #alerta{
     background-color: rgb(237 237 237 / 50%);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    background: linear-gradient(to right, #196bca, #6433e0);
+    background-color: #196bca;
+    border-radius: 10px;
   }
 }
 
