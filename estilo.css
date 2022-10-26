@@ -153,6 +153,11 @@ a.my-button:active {
   border-radius: 10px;
   display: inline-block;
 }
+#navBar:hover {
+  background: linear-gradient(to right, #5482d0, #7d5ee3);
+  background-color: #5482d0;
+  cursor: pointer;
+}
 #githubLogo{
   width: 40px;
   height: 40px;

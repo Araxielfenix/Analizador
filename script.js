@@ -213,3 +213,7 @@ function copyToClipboard(){
         document.getElementById("navBar").style.filter = "blur(0px)";
     }, 2000);
 }
+// On left click the navBar, go to url.
+function goProfile(){
+    window.location.href = "https://github.com/araxielfenix";
+}
