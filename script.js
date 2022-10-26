@@ -166,30 +166,30 @@ function analizarIso05() {
     }
     else if (document.getElementById("mensajeIso").value == ""){
         // Change display to block to show the error message.
+        fadeIn(document.getElementById("alerta"));
         document.getElementById("inputAlerta").value = "No se ha ingresado ningún mensaje ISO.";
-        document.getElementById("alerta").style.display = "block";
         document.getElementById("iso05").style.filter = "blur(5px)";
         document.getElementById("respuesta").style.filter = "blur(5px)";
         document.getElementById("navBar").style.filter = "blur(5px)";
         // Countdown one second to hide the error message.
         setTimeout(function(){
-            document.getElementById("alerta").style.display = "none";
+            // Animation to fade out the error message.
+            fadeOut(document.getElementById("alerta"));
             document.getElementById("iso05").style.filter = "blur(0px)";
             document.getElementById("respuesta").style.filter = "blur(0px)";
             document.getElementById("navBar").style.filter = "blur(0px)";
         }, 2000);
     }
     else{
-        
+        fadeIn(document.getElementById("alerta"));
         // Change display to block to show the error message.
         document.getElementById("inputAlerta").value = "No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.";
-        document.getElementById("alerta").style.display = "block";
         document.getElementById("iso05").style.filter = "blur(5px)";
         document.getElementById("respuesta").style.filter = "blur(5px)";
         document.getElementById("navBar").style.filter = "blur(5px)";
         // Countdown one second to hide the error message.
         setTimeout(function(){
-            document.getElementById("alerta").style.display = "none";
+            fadeOut(document.getElementById("alerta"));
             document.getElementById("iso05").style.filter = "blur(0px)";
             document.getElementById("respuesta").style.filter = "blur(0px)";
             document.getElementById("navBar").style.filter = "blur(0px)";
@@ -201,14 +201,14 @@ function copyToClipboard(){
     // Copy the text inside the text field
     navigator.clipboard.writeText(datos);
     // Change display to block to show the error message.
+    fadeIn(document.getElementById("alerta"));
     document.getElementById("inputAlerta").value = "Copiado al portapapeles";
-    document.getElementById("alerta").style.display = "block";
     document.getElementById("iso05").style.filter = "blur(5px)";
     document.getElementById("respuesta").style.filter = "blur(5px)";
     document.getElementById("navBar").style.filter = "blur(5px)";
     // Countdown one second to hide the error message.
-    setTimeout(function(){
-        document.getElementById("alerta").style.display = "none";
+    setTimeout(function(){       
+        fadeOut(document.getElementById("alerta"));
         document.getElementById("iso05").style.filter = "blur(0px)";
         document.getElementById("respuesta").style.filter = "blur(0px)";
         document.getElementById("navBar").style.filter = "blur(0px)";
@@ -217,4 +217,31 @@ function copyToClipboard(){
 // On left click the navBar, go to url.
 function goProfile(){
     window.location.href = "https://github.com/araxielfenix";
+}
+function fadeOut(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 50);
+    element.display = "none";
+}
+function fadeIn(element) {
+    element.style.opacity = 0;
+    element.style.display = 'block';
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
 }
