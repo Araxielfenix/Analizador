@@ -55,19 +55,19 @@
 
   #mensajeIso, #codigo1, #codigo2, #cuatrillave, #tarjeta, #nombreComercio, #numeroComercio, #monto, #fecha, #hora1, #hora2, #folio {
     background: #262627;
-    color: ghostwhite;
+    color: rgb(97, 94, 94);
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+    filter: invert(50%);
   }
 
   input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+    filter: invert(50%);
   }
 
   ::-webkit-input-placeholder{
-    color: white;
+    color: rgb(97, 94, 94);
   }
 
   #alerta{
