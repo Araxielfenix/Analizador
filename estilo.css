@@ -52,10 +52,24 @@
   html {
     background: #0d0c10;
   }
+
   #mensajeIso, #codigo1, #codigo2, #cuatrillave, #tarjeta, #nombreComercio, #numeroComercio, #monto, #fecha, #hora1, #hora2, #folio {
     background: #262627;
     color: ghostwhite;
   }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  ::-webkit-input-placeholder{
+    color: white;
+  }
+
   #alerta{
     background-color: rgba(99, 98, 98, 0.5);
   }
@@ -138,6 +152,7 @@ a.my-button:active {
   box-shadow: 0px 0px 2px rgba(66, 66, 66, 0.88);
   text-shadow: 0px 0px 5px rgba(66, 66, 66, 0);
 }
+
 #navBar{
   /* Translucid navBar with horizontal gradient blue and purple. */
   background: linear-gradient(to right, #196bca, #6433e0);
