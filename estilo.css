@@ -74,8 +74,13 @@
     background-color: rgba(99, 98, 98, 0.5);
   }
   #inputAlerta{
-    background-color: transparent;
+    background-color: #262627;
     color: white;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(61, 61, 61);
+    border-radius: 50px;
   }
 }
 /* Tema blanco */
