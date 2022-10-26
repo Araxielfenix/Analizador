@@ -180,6 +180,7 @@ function analizarIso05() {
         }, 2000);
     }
     else{
+        
         // Change display to block to show the error message.
         document.getElementById("inputAlerta").value = "No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.";
         document.getElementById("alerta").style.display = "block";

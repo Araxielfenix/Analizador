@@ -55,7 +55,7 @@
 
   #mensajeIso, #codigo1, #codigo2, #cuatrillave, #tarjeta, #nombreComercio, #numeroComercio, #monto, #fecha, #hora1, #hora2, #folio {
     background: #262627;
-    color: rgb(97, 94, 94);
+    color: rgb(255, 255, 255);
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
