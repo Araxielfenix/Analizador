@@ -172,7 +172,7 @@ function analizarIso05() {
  * @param monto - amount
  * @param fecha - date
  * @param hora1 - "00:00:00"
- * @param hora2 - "00"
+ * @param hora2 - "00:00:00"
  */
 function llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2){
     document.getElementById("codigo1").value = codigo1;
@@ -189,7 +189,7 @@ function llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, no
     document.getElementById("fecha").value = fecha;
     document.getElementById("hora1").value = hora1;
     document.getElementById("hora2").value = hora2;
-    datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: " + monto + "\n";
+    datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: $" + monto + "\n";
     datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
 }
 
