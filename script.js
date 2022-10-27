@@ -63,20 +63,7 @@ function analizarIso05() {
 
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
-
-    document.getElementById("codigo1").value = codigo1;
-    document.getElementById("codigo2").value = codigo2;
-    document.getElementById("cuatrillave").value = cuatriLlave;
-    document.getElementById("tarjeta").value = tarjeta;
-    document.getElementById("numeroComercio").value = numeroComercio;
-    document.getElementById("numeroComercio").style.width = "70px";
-    document.getElementById("nombreComercio").value = nombreComercio;
-    document.getElementById("nombreComercio").style.width = "274px;";
-    document.getElementById("folio").value = folio;
-    document.getElementById("monto").value = "$" + monto;
-    document.getElementById("botonCopiar").style.display = "inline-block";
-    datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: " + monto + "\n";
-    datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
+    llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
     // get current year.
     var today = new Date();
     today.getUTCFullYear();
@@ -149,7 +136,45 @@ function analizarIso05() {
     
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
+    llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
+    // get current year.
+    var today = new Date();
+    today.getUTCFullYear();
+    var year = today.toString().split(" ");
+    document.getElementById("fecha").value = year[3] + "-" + fecha.substring(0,2) + "-" + fecha.substring(2,4);
+    // Set now time to field "hora1".
+    document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
+    // Set hour and minutes to field "hora2".
+    document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
+    }
+    /* Checking if the input field is empty. */
+    else if (document.getElementById("mensajeIso").value == ""){
+        blur("No se ha ingresado ningún mensaje ISO.");
+        unBlur();
+    }
+    /* Checking if the message is in the correct format. */
+    else{
+        blur("No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.");
+        unBlur();
+    }
+}
 
+/**
+ * It takes the values of the variables and puts them in the input fields.
+ * </code>
+ * @param codigo1 - "00"
+ * @param codigo2 - The response code.
+ * @param cuatriLlave - 4-digit number
+ * @param tarjeta - card number
+ * @param numeroComercio - The number of the store
+ * @param nombreComercio - Name of the store
+ * @param folio - The number of the transaction
+ * @param monto - amount
+ * @param fecha - date
+ * @param hora1 - "00:00:00"
+ * @param hora2 - "00"
+ */
+function llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2){
     document.getElementById("codigo1").value = codigo1;
     document.getElementById("codigo2").value = codigo2;
     document.getElementById("cuatrillave").value = cuatriLlave;
@@ -161,72 +186,58 @@ function analizarIso05() {
     document.getElementById("folio").value = folio;
     document.getElementById("monto").value = "$" + monto;
     document.getElementById("botonCopiar").style.display = "inline-block";
+    document.getElementById("fecha").value = fecha;
+    document.getElementById("hora1").value = hora1;
+    document.getElementById("hora2").value = hora2;
     datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: " + monto + "\n";
     datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
-    // get current year.
-    var today = new Date();
-    today.getUTCFullYear();
-    var year = today.toString().split(" ");
-    document.getElementById("fecha").value = year[3] + "-" + fecha.substring(0,2) + "-" + fecha.substring(2,4);
-    // Set now time to field "hora1".
-    document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
-    // Set hour and minutes to field "hora2".
-    document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
-    }
-    else if (document.getElementById("mensajeIso").value == ""){
-        // Change display to block to show the error message.
-        fadeIn(document.getElementById("alerta"));
-        document.getElementById("inputAlerta").value = "No se ha ingresado ningún mensaje ISO.";
-        document.getElementById("iso05").style.filter = "blur(5px)";
-        document.getElementById("respuesta").style.filter = "blur(5px)";
-        document.getElementById("navBar").style.filter = "blur(5px)";
-        // Countdown one second to hide the error message.
-        setTimeout(function(){
-            // Animation to fade out the error message.
-            fadeOut(document.getElementById("alerta"));
-            document.getElementById("iso05").style.filter = "blur(0px)";
-            document.getElementById("respuesta").style.filter = "blur(0px)";
-            document.getElementById("navBar").style.filter = "blur(0px)";
-        }, 2000);
-    }
-    else{
-        fadeIn(document.getElementById("alerta"));
-        // Change display to block to show the error message.
-        document.getElementById("inputAlerta").value = "No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.";
-        document.getElementById("iso05").style.filter = "blur(5px)";
-        document.getElementById("respuesta").style.filter = "blur(5px)";
-        document.getElementById("navBar").style.filter = "blur(5px)";
-        // Countdown one second to hide the error message.
-        setTimeout(function(){
-            fadeOut(document.getElementById("alerta"));
-            document.getElementById("iso05").style.filter = "blur(0px)";
-            document.getElementById("respuesta").style.filter = "blur(0px)";
-            document.getElementById("navBar").style.filter = "blur(0px)";
-        }, 2000);
-    }
 }
 
+/**
+ * It copies the text inside the text field to the clipboard
+ */
 function copyToClipboard(){
-    // Copy the text inside the text field
     navigator.clipboard.writeText(datos);
-    // Change display to block to show the error message.
+    blur("Copiado al portapapeles");
+    unBlur();
+}
+/**
+ * When the user clicks the button, the browser will go to the GitHub profile of Araxielfenix.
+ */
+function goProfile(){
+    window.location.href = "https://github.com/araxielfenix";
+}
+
+/**
+ * It takes a string as an argument and displays it in a div.
+ * @param mensaje - The message that will be displayed in the alert box.
+ */
+function blur(mensaje){
+    document.getElementById("inputAlerta").value = mensaje;
     fadeIn(document.getElementById("alerta"));
-    document.getElementById("inputAlerta").value = "Copiado al portapapeles";
     document.getElementById("iso05").style.filter = "blur(5px)";
     document.getElementById("respuesta").style.filter = "blur(5px)";
     document.getElementById("navBar").style.filter = "blur(5px)";
-    // Countdown one second to hide the error message.
-    setTimeout(function(){       
+}
+
+/**
+ * After 2 seconds, the alert box fades out, and the blur effect is removed from the rest of the page.
+ */
+function unBlur(){
+    setTimeout(function(){
         fadeOut(document.getElementById("alerta"));
         document.getElementById("iso05").style.filter = "blur(0px)";
         document.getElementById("respuesta").style.filter = "blur(0px)";
         document.getElementById("navBar").style.filter = "blur(0px)";
     }, 2000);
 }
-// On left click the navBar, go to url.
-function goProfile(){
-    window.location.href = "https://github.com/araxielfenix";
-}
+
+/**
+ * The function takes an element as an argument, and then fades it out by decreasing its opacity by 10%
+ * every 50 milliseconds until it reaches 0.1, at which point it stops the timer and sets the element's
+ * display to none.
+ * @param element - The element to fade out.
+ */
 function fadeOut(element) {
     var op = 1;  // initial opacity
     var timer = setInterval(function () {
@@ -240,6 +251,13 @@ function fadeOut(element) {
     }, 50);
     element.display = "none";
 }
+
+/**
+ * It takes an element and sets its opacity to 0, then sets its display to block, then sets its opacity
+ * to 0.1, then sets its display to block, then sets a timer to increase its opacity by 0.1 every 10
+ * milliseconds until it reaches 1.
+ * @param element - The element to fade in.
+ */
 function fadeIn(element) {
     element.style.opacity = 0;
     element.style.display = 'block';
