@@ -2,6 +2,10 @@ var datos = "";
 function analizarIso05() {
     // Obtener el texto del textarea "mensajeIso" y guardarlo en la variable "IsoMsg".
     var IsoMsg = document.getElementById("mensajeIso").value;
+
+    // Analiza el IsoMsg y cambia todas las X por *.
+    var IsoMsg = IsoMsg.replace(/x/g, "*");
+
     // Get the length of the string
     var IsoMsgLen = IsoMsg.length;
     if(IsoMsgLen >= 1267){
@@ -41,16 +45,21 @@ function analizarIso05() {
         hora2 += IsoMsgSplitCh[66 + i];
     }
     var tarjeta = IsoMsgSplitKey[2].substring(7, 23);
-    var folio = IsoMsgSplitStar[20].substring(3, 12);
+    var folio = IsoMsgSplitStar[32].substring(3, 12);
     var monto = "";
     for(var i = 0; i< 12; i++){
         monto += IsoMsgSplitCh[38 + i];
     }
     //Por cada 23 caracteres, si es un " ", se almacenará en la variable "IsoMsgSplitCom".
     var IsoMsgSplitCom = IsoMsg.match(/.{1,22}/g);
-    
+    var numeroComercio = IsoMsgSplitCom[14];
+    // Analiza el numeroComercio y eliminara los espacios en blanco.
+    var numeroComercio = numeroComercio.replace(/ /g, "");
+    // Get the lenght and save the last 7 characters in the variable "numeroComercio".
+    var numeroComercio = numeroComercio.substring(numeroComercio.length - 7, numeroComercio.length);
     var nombreComercio = IsoMsgSplitCom[12].substring(1, IsoMsgSplitCom[12].length) + IsoMsgSplitCom[13];    
-    var numeroComercio = IsoMsgSplitCom[11].substring(7, 16);
+    nombreComercio = nombreComercio.split("0");
+    nombreComercio = nombreComercio[0];
 
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
@@ -137,7 +146,7 @@ function analizarIso05() {
 
     nombreComercio = nombreComercio.split("0");
     nombreComercio = nombreComercio[0];
-
+    
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
 
