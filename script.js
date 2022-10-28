@@ -59,7 +59,7 @@ function analizarIso05() {
     var numeroComercio = numeroComercio.substring(numeroComercio.length - 7, numeroComercio.length);
     var nombreComercio = IsoMsgSplitCom[12].substring(1, IsoMsgSplitCom[12].length) + IsoMsgSplitCom[13];    
     nombreComercio = nombreComercio.split("0");
-    nombreComercio = nombreComercio[0];
+    nombreComercio = nombreComercio[0].substring(8, nombreComercio[0].length);
 
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
@@ -123,8 +123,8 @@ function analizarIso05() {
     var numeroComercio = IsoMsgSplitStar[16].substring(IsoMsgSplitStar[16].indexOf("MX") + 5, IsoMsgSplitStar[16].indexOf("MX") + 12);
 
     nombreComercio = nombreComercio.split("0");
-    nombreComercio = nombreComercio[0];
-    
+    console.log(nombreComercio[0]);
+    nombreComercio = nombreComercio[0].substring(8, nombreComercio[0].length);
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
     llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
@@ -178,7 +178,7 @@ function llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, no
     // Set hour and minutes to field "hora2".
     document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
     datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: $" + monto + "\n";
-    datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
+    datos += "fecha: " + document.getElementById("fecha").value + "\n" + "hora1: " + document.getElementById("hora1").value + "\n" + "hora2: " + document.getElementById("hora2").value;
 }
 
 /**
