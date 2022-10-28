@@ -64,15 +64,6 @@ function analizarIso05() {
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
     llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
-    // get current year.
-    var today = new Date();
-    today.getUTCFullYear();
-    var year = today.toString().split(" ");
-    document.getElementById("fecha").value = year[3] + "-" + fecha.substring(0,2) + "-" + fecha.substring(2,4);
-    // Set now time to field "hora1".
-    document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
-    // Set hour and minutes to field "hora2".
-    document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
     }
     else if(IsoMsgLen >= 949){
         // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
@@ -137,15 +128,6 @@ function analizarIso05() {
     // El valorde la variable "monto" se divide entre 100 para obtener el monto en pesos.
     monto = monto / 100;
     llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
-    // get current year.
-    var today = new Date();
-    today.getUTCFullYear();
-    var year = today.toString().split(" ");
-    document.getElementById("fecha").value = year[3] + "-" + fecha.substring(0,2) + "-" + fecha.substring(2,4);
-    // Set now time to field "hora1".
-    document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
-    // Set hour and minutes to field "hora2".
-    document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
     }
     /* Checking if the input field is empty. */
     else if (document.getElementById("mensajeIso").value == ""){
@@ -186,9 +168,15 @@ function llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, no
     document.getElementById("folio").value = folio;
     document.getElementById("monto").value = "$" + monto;
     document.getElementById("botonCopiar").style.display = "inline-block";
-    document.getElementById("fecha").value = fecha;
-    document.getElementById("hora1").value = hora1;
-    document.getElementById("hora2").value = hora2;
+    // get current year.
+    var today = new Date();
+    today.getUTCFullYear();
+    var year = today.toString().split(" ");
+    document.getElementById("fecha").value = year[3] + "-" + fecha.substring(0,2) + "-" + fecha.substring(2,4);
+    // Set now time to field "hora1".
+    document.getElementById("hora1").value = hora1.substring(0,2) + ":" + hora1.substring(2,4) + ":" + hora1.substring(4,6);
+    // Set hour and minutes to field "hora2".
+    document.getElementById("hora2").value = hora2.substring(0,2) + ":" + hora2.substring(2,4) + ":" + hora2.substring(4,6);
     datos = "Código: " + codigo1 + "\n" + "Código de respuesta: " + codigo2 + "\n" + "Cuatrillave: " + cuatriLlave + "\n" + "Tarjeta: " + tarjeta + "\n" + "Número de comercio: " + numeroComercio + "\n" + "Nombre de comercio: " + nombreComercio + "\n" + "Folio: " + folio + "\n" + "Monto: $" + monto + "\n";
     datos += "fecha: " + fecha + "\n" + "hora1: " + hora1 + "\n" + "hora2: " + hora2;
 }
