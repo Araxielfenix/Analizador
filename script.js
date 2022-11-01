@@ -65,7 +65,7 @@ function analizarIso05() {
     monto = monto / 100;
     llenarCampos(codigo1, codigo2, cuatriLlave, tarjeta, numeroComercio, nombreComercio, folio, monto, fecha, hora1, hora2);
     }
-    else if(IsoMsgLen >= 949){
+    else if(IsoMsgLen >= 900){
         // Split the IsoMsg by the character " " and save it in the variable "IsoMsgSplit".
     var IsoMsgSplit = IsoMsg.split(" ");
     var IsoMsgSplitKey = IsoMsg.split("]");
@@ -119,6 +119,7 @@ function analizarIso05() {
         }
     }
     
+    console.log(IsoMsgSplitStar);
     // Se busca en la variable IsoMsgSplitStar[16] la posición en la que se encuentra la palabra "MX" y se guargan los 7 caracteres siguientes en la variable numero de comercio.
     var numeroComercio = IsoMsgSplitStar[16].substring(IsoMsgSplitStar[16].indexOf("MX") + 5, IsoMsgSplitStar[16].indexOf("MX") + 12);
 
@@ -137,6 +138,7 @@ function analizarIso05() {
     /* Checking if the message is in the correct format. */
     else{
         blur("No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.");
+        console.log(IsoMsgLen);
         unBlur();
     }
 }
