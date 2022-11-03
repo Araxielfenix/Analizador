@@ -194,6 +194,26 @@ function analizarIso05() {
         var cardAcceptorNameLocationPos = cardAcceptorTerminalIdentificationPos;
     }
 
+    // Imprime en consola las variables obtenidas.
+    console.log("Bitmap: " + bitmap);
+    console.log("Bitmap Binario: " + bitmapBin);
+    console.log("Processing Code: " + processingCode);
+    console.log("System Trace Audit Number: " + systemTraceAuditNumber);
+    console.log("Settlement Date: " + settlementDate);
+    console.log("Capture Date: " + captureDate);
+    console.log("Merchant Type: " + merchantType);
+    console.log("Entry Mode: " + entryMode);
+    console.log("Condition Code: " + conditionCode);
+    console.log("Acquiring Institution Identification Code: " + acquiringInstitutionIdentificationCode);
+    console.log("Track 2 Data: " + track2Data);
+    console.log("Retrieval Reference Number: " + retrievalReferenceNumber);
+    console.log("Authorization Identification Response: " + authorizationIdentificationResponse);
+    console.log("Response Code: " + responseCode);
+    console.log("Card Acceptor Terminal Identification: " + cardAcceptorTerminalIdentification);
+    console.log("Card Acceptor Name/Location: " + cardAcceptorNameLocation);
+    console.log("Numero Comercio: " + numeroComercio);
+    
+
     llenarCampos(IsoMsgCodTrans, responseCode, ("1" + IsoMsgCodTrans.substring(1, 4) + " " + processingCode.substring(0,2) + " " + processingCode.substring(2, 4) + " " + processingCode.substring(4, 6)), card, numeroComercio, cardAcceptorNameLocation, cardAcceptorTerminalIdentification.substring(3, 12), amount/100, transmissionDateTime.substring(0, 4), transmissionDateTime.substring(4, 10), localTransactionTime);
     }
     else if (document.getElementById("mensajeIso").value == ""){
