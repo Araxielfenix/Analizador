@@ -1,15 +1,16 @@
 function analizarIso05() {
+    if(document.getElementById("mensajeIso").value.length >= 900){
     // Obtener el texto del textarea "mensajeIso" y guardarlo en la variable "IsoMsg".
     var IsoMsg = document.getElementById("mensajeIso").value;
     var IsoMsgSplitKey = IsoMsg.split("]");
     var tarjeta = IsoMsgSplitKey[2].substring(7, 23);
     // Busca en "IsoMsg" la palabra "ISO" y guarda la posición en la variable "posicionIso".
     var posicionIso = IsoMsg.indexOf("ISO");
-    var tarjeta2 = IsoMsg.substring(posicionIso, IsoMsg.length);
+    var tarjeta2 = IsoMsg.substring(posicionIso+100, IsoMsg.length);
     //Busca la segunda ocurrencia de "tarjeta" en el mensaje ISO a partir de la posición de posicionIso.
-    var card = tarjeta2.substring(tarjeta2.search(tarjeta), tarjeta2.search(tarjeta) + 16);
+    var card = tarjeta2.substring(tarjeta2.indexOf(tarjeta), 20);
     // Guarda la posición de card en la variable "cardPos".
-    var cardPos = tarjeta2.search(card);
+    var cardPos = tarjeta2.indexOf(card);
     // 16 posiciones después de "ISO" se encuentra el bitmap y es de 16 caracteres.
     var bitmap = IsoMsg.substring(posicionIso + 16, posicionIso + 32);
     
@@ -21,8 +22,6 @@ function analizarIso05() {
 
     // Busca en "IsoMsg" el bitmap y guarda la posición en la variable "IsoMsgBitMapPos".
     var IsoMsgBitMapPos = IsoMsg.indexOf(bitmap);
-    //123456789 0123456789 0123456789 0123456789 0123456789 012345678901234
-    //001100100 0111000110 0010010000 0010010100 0101000011 000000000011110
 
     // Obtener el codigo de la transacción, se encuentra 4 posiciones antes del bitmap.
     var IsoMsgCodTrans = IsoMsg.substring(IsoMsgBitMapPos - 4, IsoMsgBitMapPos);
@@ -196,6 +195,15 @@ function analizarIso05() {
     }
 
     llenarCampos(IsoMsgCodTrans, responseCode, ("1" + IsoMsgCodTrans.substring(1, 4) + " " + processingCode.substring(0,2) + " " + processingCode.substring(2, 4) + " " + processingCode.substring(4, 6)), card, numeroComercio, cardAcceptorNameLocation, cardAcceptorTerminalIdentification.substring(3, 12), amount/100, transmissionDateTime.substring(0, 4), transmissionDateTime.substring(4, 10), localTransactionTime);
+    }
+    else if (document.getElementById("mensajeIso").value == ""){
+        blur("No se ha ingresado ningún mensaje ISO.");
+        unBlur();
+    }
+    else if(document.getElementById("mensajeIso").value.length <= 700){
+        blur("No es posible analizar el mensaje ISO debido a que no cumple con el formato requerido.");
+        unBlur();
+    }
 }
 
 /**
