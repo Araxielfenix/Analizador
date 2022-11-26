@@ -165,7 +165,7 @@ a.my-button:active {
   text-shadow: 0px 0px 5px rgba(66, 66, 66, 0);
 }
 
-#navBar{
+.navBar{
   /* Translucid navBar with horizontal gradient blue and purple. */
   background: linear-gradient(to right, #196bca, #6433e0);
   background-color: #196bca;
@@ -180,10 +180,37 @@ a.my-button:active {
   border-radius: 10px;
   display: inline-block;
 }
-#navBar:hover {
+.navBar:hover {
   background: linear-gradient(to right, #5482d0, #7d5ee3);
   background-color: #5482d0;
   cursor: pointer;
+}
+#comparador{
+  display: none;
+  vertical-align: super;
+  text-decoration: none;
+}
+.custom-file-upload {
+  /* Set background with vertical gradient from blue to purple */
+  background: linear-gradient(to right, #196bca, #6433e0);
+  background-color: #196bca;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: white;
+  font-family: Lucida Console bold;
+  font-weight: bold;
+}
+.custom-file-upload:hover {
+  background: linear-gradient(to right, #5482d0, #7d5ee3);
+  background-color: #5482d0;
+  cursor: pointer;
+}
+/* On hover navBar, show the child named Analizador */
+section:hover #comparador {
+  display: inline;
 }
 #githubLogo{
   width: 40px;
