@@ -1,3 +1,4 @@
+
 function analizarIso05() {
     if(document.getElementById("mensajeIso").value.length >= 900){
     // Obtener el texto del textarea "mensajeIso" y guardarlo en la variable "IsoMsg".
@@ -274,12 +275,6 @@ function copyToClipboard(){
     blur("Copiado al portapapeles");
     unBlur();
 }
-/**
- * When the user clicks the button, the browser will go to the GitHub profile of Araxielfenix.
- */
-function goProfile(){
-    window.location.href = "https://github.com/araxielfenix";
-}
 
 /**
  * It takes a string as an argument and displays it in a div.
@@ -290,7 +285,7 @@ function blur(mensaje){
     fadeIn(document.getElementById("alerta"));
     document.getElementById("iso05").style.filter = "blur(5px)";
     document.getElementById("respuesta").style.filter = "blur(5px)";
-    document.getElementById("navBar").style.filter = "blur(5px)";
+    document.getElementById("navB").style.filter = "blur(5px)";
 }
 
 /**
@@ -301,7 +296,7 @@ function unBlur(){
         fadeOut(document.getElementById("alerta"));
         document.getElementById("iso05").style.filter = "blur(0px)";
         document.getElementById("respuesta").style.filter = "blur(0px)";
-        document.getElementById("navBar").style.filter = "blur(0px)";
+        document.getElementById("navB").style.filter = "blur(0px)";
     }, 2000);
 }
 

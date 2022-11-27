@@ -1,22 +1,28 @@
 <!-- HTML5 -->
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/navBar.css">
     <script src="script2.js"></script>
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/6f424ca8-2f68-43c6-b021-a3134ace9225-profile_image-70x70.png" type="image/png" sizes="16x16" id = "favIcon">
     <title>Mensajes ISO</title>
   </head>
-
-  <!-- Nav with id navBar and the link to https://github.com/araxielfenix on click-->
-  <nav onclick="goProfile()">
-    <section class = "navBar">
-        <img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" alt="Github" id="githubLogo" />
-        <a href="https://github.com/araxielfenix" id="afGithub">Araxiel Fenix</a>
-        <a href="https://araxielfenix.github.io/Comparador/#" class="custom-file-upload" id="comparador">Comparador</a>
-    </section>
-</nav>
+  <nav id = "navB" class = "navBar">
+      <div class = "flex-container flex-container-style fixed-height">
+          <div class="flex-item">
+              <a href="https://github.com/araxielfenix">
+                  <label class = "navItem"> ARAXIEL FENIX </label>
+              </a>
+          </div>
+          <div class="flex-item">
+              <a href="https://araxielfenix.github.io/Analizador/#">
+                  <label class = "navItem"> Analisador de mensajes ISO </label>
+              </a>
+          </div>
+      </div>
+  </nav>
   <p> </p>
   <body>
     <div id = "alerta" class="overlay">
@@ -27,7 +33,7 @@
 [T: 00:00:00.000][D: 00000][C:    000000xxxxxx0000][Iap: iap_BBVEMI0_P0      ][Lp: 0:I00][Rw: W][L:  000]ISO00000000000000000C00000A0000E000000000000000000000000000000000000000000000000000000000000000000000000000000xxxxxx0000=********************0000000000000B00EAB         NOMBRE DE COMERCIO MEXICO      000MX0000000000            00000000000000B000AGRE+0000000000EGLO0000000000000000000000000000000& 0000000000! Q000000 00! Q000000 00! C000000 ****    0000000000        ! C000000 000000000000! R000000              ! B000000 0FF000000000000000000E000A0A0000F0DE0000000000000000000000000C00000B00000000000000F000000F000000000A00A0B00000000000000000000000000000000000000000000000000000! B000000 CF0000000ICCE0F0C0000000000000000000000000000000A0000000000000000000000000000000! B000000 0000000000000000000
 [T: 00:00:00.000][D: 00000][C:    000000xxxxxx0000][Iap: iap_BBVEMI0_P0      ][Lp: 0:I0 ][Rw: R][L:  000]ISO0000000000000000A00000E00000A0000000000000000000000000000000000000000000000000000000000000000000000000000xxxxxx0000=********************000000000000000000000B00EAB         00 0000000EGLO000000000000000000& 0000000000! Q000000 00! Q000000 00! C000000 ****    0000000000        ! C000000 000000000000! R000000              ! 0000000 C           0     N"></textarea>
         <p></p>
-        <a class="my-button" href="#" onclick="analizarIso05()">Analizar</a>
+        <button id = "analizarButton" class = "my-button" onclick="analizarIso05()">Analizar</button>
     </div>
     <p></p>
     <div id = "respuesta">
@@ -62,7 +68,7 @@
         </div>
         <p></p>
         <div id = "copy">
-          <a id = "botonCopiar" class="my-button" onclick="copyToClipboard()" href="#">Copiar todo</a>
+          <button id = "botonCopiar" class = "my-button" onclick="copyToClipboard()">Copiar</button>
       </div>
       </div>
     </div>
