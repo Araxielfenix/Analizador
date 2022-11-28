@@ -1,7 +1,6 @@
 @media (prefers-color-scheme: dark) {
   html {
     background-color: #000000;
-    opacity: 0.9;
     background-image: radial-gradient(#1f1f1f 0.9px, #000000 0.9px);
     background-size: 18px 18px;
   }
@@ -24,7 +23,6 @@
 @media (prefers-color-scheme: light) {
   html {
     background-color: #f8f8ff;
-    opacity: 0.9;
     background-image: radial-gradient(
       #1f1f1f 0.8500000000000001px,
       #f8f8ff 0.8500000000000001px
