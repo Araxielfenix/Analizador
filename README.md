@@ -22,6 +22,8 @@ La función analizarIso05() extrae la información del mensaje ISO que se ingres
 
 Para usar esta función, es necesario tener un mensaje ISO de longitud fija que contenga la información deseada. Se puede ingresar el mensaje en el campo de texto con id mensajeIso.
 
+-Entra a https://araxielfenix.github.io/Analizador/
+
 Después de ingresar el mensaje, se debe llamar la función analizarIso05() para que extraiga la información del mensaje y la muestre en las variables correspondientes.
 
 Es importante tener en cuenta que la función fue creada específicamente para extraer información de mensajes ISO de longitud fija que cumplen con ciertos requisitos, por lo que no se garantiza que funcione correctamente con otros mensajes ISO.
