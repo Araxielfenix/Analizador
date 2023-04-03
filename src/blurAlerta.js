@@ -31,13 +31,13 @@ export function blur() {
 
 function alerta(time) {
     blurFields();
-    document.getElementById("analizarButton").classList.add("invisible");
+    //document.getElementById("analizarButton").classList.add("invisible");
     document.getElementById("divAlerta").classList.remove("hidden");
-    document.getElementById("divAlerta").classList.add("flex");
+    document.getElementById("divAlerta").classList.add("grid");
     setTimeout(function () {
-        document.getElementById("divAlerta").classList.remove("flex");
+        document.getElementById("divAlerta").classList.remove("grid");
         document.getElementById("divAlerta").classList.add("hidden");
-        document.getElementById("analizarButton").classList.remove("invisible");
+        //document.getElementById("analizarButton").classList.remove("invisible");
         unblurFields();
     }, time);
 }
