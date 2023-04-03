@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  base: 'https://araxielfenix.github.io/Analizador-Solidjs/',
+  base: 'https://araxielfenix.github.io/Analizador/',
   build: {
     target: 'esnext',
   },
