@@ -55,18 +55,18 @@ const Nav = () => {
 							>
 								<li>
 									<a
-										href="https://araxielfenix.github.io/Analizador/"
-										class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-									>
-										Analizador
-									</a>
-								</li>
-								<li>
-									<a
 										href="https://araxielfenix.github.io/Comparador/"
 										class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
 									>
 										Comparador
+									</a>
+								</li>
+								<li>
+									<a
+										href="https://araxielfenix.github.io/Formateador-ISO8583/"
+										class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+									>
+										Formateador
 									</a>
 								</li>
 							</ul>
