@@ -5,7 +5,7 @@ const inputsDatos = () => {
         <div id="divInputs">
             <div class="grid justify-items-center grid-cols-1 pt-3 pb-5">
                 <a id="analizarButton"
-                    class="hiddeninline-block rounded border border-current px-8 py-3 text-sm font-medium bg-indigo-600 text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
+                    class="inline-block select-none rounded border border-current px-8 py-3 text-sm font-medium bg-indigo-600 text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
                     href="#" onclick={blur}>
                     Analizar
                 </a>
@@ -39,7 +39,7 @@ const inputsDatos = () => {
             </div>
             <div class="grid justify-items-center grid-cols-1 py-3">
                 <a id="copiar"
-                    class="hidden rounded border border-current px-8 py-3 text-sm font-medium bg-indigo-600 text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
+                    class="hidden select-none rounded border border-current px-8 py-3 text-sm font-medium bg-indigo-600 text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
                     href="#" onclick={blur}>
                     Copiar
                 </a>
