@@ -1,6 +1,6 @@
 // src/analizarIso.js - Versión robusta usando el nuevo parser
 import { iso8583Parser } from './iso8583.js';
-import { parseField63Tokens } from './tokens/index.js';
+import { parseField63Tokens, parseField63TokensFromString } from './tokens/index.js';
 
 let lastParsedResult = null;
 
@@ -28,9 +28,39 @@ export function analizarIso05() {
       console.warn('Parser warnings:', result.errors);
     }
 
-    // Parsear tokens del campo 63 si existe
+    // Parsear tokens del campo 63 si existe (estándar ISO)
     if (result.fields[63]?.subTokens) {
       result.field63Parsed = parseField63Tokens(result.fields[63].subTokens);
+    }
+    
+    // Parsear tokens BBVA en campo 48 (Add Private Data) - ¡BBVA usa este campo!
+    if (result.fields[48]?.valor) {
+      const tokens48 = parseField63TokensFromString(result.fields[48].valor);
+      if (tokens48.length > 0) {
+        result.field63Parsed = { ...result.field63Parsed, ...parseField63Tokens(tokens48) };
+        console.log('Tokens BBVA encontrados en campo 48:', tokens48.map(t => t.id).join(', '));
+      }
+    }
+    
+    // Parsear tokens BBVA en campo 47 (Add National Data) - también puede tener tokens
+    if (result.fields[47]?.valor) {
+      const tokens47 = parseField63TokensFromString(result.fields[47].valor);
+      if (tokens47.length > 0) {
+        result.field63Parsed = { ...result.field63Parsed, ...parseField63Tokens(tokens47) };
+        console.log('Tokens BBVA encontrados en campo 47:', tokens47.map(t => t.id).join(', '));
+      }
+    }
+
+    // Parseo GLOBAL: buscar TODOS los tokens BBVA (! XX00000 ...) en el ISO completo
+    // Esto captura RJ y cualquier token que quede fuera de los campos 47/48
+    const globalTokens = parseField63TokensFromString(IsoMsg);
+    if (globalTokens.length > 0) {
+      const parsedGlobal = parseField63Tokens(globalTokens);
+      result.field63Parsed = { ...result.field63Parsed, ...parsedGlobal };
+      const newTokens = Object.keys(parsedGlobal).filter(k => !result.field63Parsed?.[k]);
+      if (newTokens.length > 0) {
+        console.log('Tokens BBVA encontrados en ISO completo (barrido global):', newTokens.join(', '));
+      }
     }
 
     lastParsedResult = result;
