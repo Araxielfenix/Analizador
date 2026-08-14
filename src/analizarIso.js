@@ -14,10 +14,19 @@ export function analizarIso05() {
 
   let IsoMsg = textArea.value;
   
-  // Extraer la parte ISO si tiene headers de log [T:...]
-  const isoMatch = IsoMsg.match(/ISO[\dA-F]+/);
-  if (isoMatch) {
-    IsoMsg = isoMatch[0];
+  // Extraer la parte ISO si tiene headers de log [T:...][L: NNN]ISO...
+  // Usar la longitud declarada en [L: NNN] para cortar exactamente NNN chars tras "ISO"
+  const lMatch = IsoMsg.match(/\[L:\s*(\d+)\]ISO(.*)/s);
+  if (lMatch) {
+    const expectedLen = parseInt(lMatch[1], 10);
+    const afterIso = lMatch[2];
+    IsoMsg = afterIso.substring(0, expectedLen);
+  } else {
+    // Fallback: buscar "ISO" y tomar hasta fin de línea / siguiente [
+    const isoMatch = IsoMsg.match(/ISO[\s\S]*?(?=\n|\[|$)/);
+    if (isoMatch) {
+      IsoMsg = isoMatch[0];
+    }
   }
 
   try {
