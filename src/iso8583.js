@@ -1,189 +1,266 @@
-// src/iso8583.js - Parser ISO 8583 robusto (SolidJS compatible, sin JSX)
-export class ISO8583Parser {
-  constructor() {
-    this.fieldDefs = {
-      0:  { id: 0,  nombre: 'MTI',              longitud: 'fija',  largo: 4,  tipo: 'n' },
-      1:  { id: 1,  nombre: 'Bitmap Extendido', longitud: 'fija',  largo: 16, tipo: 'b' },
-      2:  { id: 2,  nombre: 'PAN',              longitud: 'llvar', largo: 19, tipo: 'n' },
-      3:  { id: 3,  nombre: 'Processing Code',  longitud: 'fija',  largo: 6,  tipo: 'n' },
-      4:  { id: 4,  nombre: 'Amount',           longitud: 'fija',  largo: 12, tipo: 'n' },
-      5:  { id: 5,  nombre: 'Settlement Amount',longitud: 'fija',  largo: 12, tipo: 'n' },
-      6:  { id: 6,  nombre: 'Cardholder Bill Amt',longitud: 'fija', largo: 12, tipo: 'n' },
-      7:  { id: 7,  nombre: 'Txn Date Time',    longitud: 'fija',  largo: 10, tipo: 'n' },
-      8:  { id: 8,  nombre: 'Cardholder Bill Conv',longitud: 'fija', largo: 8,  tipo: 'n' },
-      9:  { id: 9,  nombre: 'Settlement Conv Rate',longitud: 'fija', largo: 8,  tipo: 'n' },
-      10: { id: 10, nombre: 'Cardholder Conv Rate',longitud: 'fija', largo: 8,  tipo: 'n' },
-      11: { id: 11, nombre: 'STAN',             longitud: 'fija',  largo: 6,  tipo: 'n' },
-      12: { id: 12, nombre: 'Local Time',       longitud: 'fija',  largo: 6,  tipo: 'n' },
-      13: { id: 13, nombre: 'Local Date',       longitud: 'fija',  largo: 4,  tipo: 'n' },
-      14: { id: 14, nombre: 'Expiration Date',  longitud: 'fija',  largo: 4,  tipo: 'n' },
-      15: { id: 15, nombre: 'Settlement Date',  longitud: 'fija',  largo: 4,  tipo: 'n' },
-      16: { id: 16, nombre: 'Conversion Date',  longitud: 'fija',  largo: 4,  tipo: 'n' },
-      17: { id: 17, nombre: 'Capture Date',     longitud: 'fija',  largo: 4,  tipo: 'n' },
-      18: { id: 18, nombre: 'Merchant Type',    longitud: 'fija',  largo: 4,  tipo: 'n' },
-      19: { id: 19, nombre: 'Acq Country',      longitud: 'fija',  largo: 3,  tipo: 'n' },
-      20: { id: 20, nombre: 'Issuer Country',   longitud: 'fija',  largo: 3,  tipo: 'n' },
-      21: { id: 21, nombre: 'Forward Country',  longitud: 'fija',  largo: 3,  tipo: 'n' },
-      22: { id: 22, nombre: 'Entry Mode',       longitud: 'fija',  largo: 3,  tipo: 'n' },
-      23: { id: 23, nombre: 'Card Seq Number',  longitud: 'fija',  largo: 3,  tipo: 'n' },
-      24: { id: 24, nombre: 'Network Intl ID',  longitud: 'fija',  largo: 3,  tipo: 'n' },
-      25: { id: 25, nombre: 'POS Cond Code',    longitud: 'fija',  largo: 2,  tipo: 'n' },
-      26: { id: 26, nombre: 'POS PIN Cap Code', longitud: 'fija',  largo: 2,  tipo: 'n' },
-      27: { id: 27, nombre: 'Auth ID Response', longitud: 'fija',  largo: 1,  tipo: 'n' },
-      28: { id: 28, nombre: 'Txn Fee Amount',   longitud: 'llvar', largo: 9,  tipo: 'n' },
-      29: { id: 29, nombre: 'Settlement Fee',   longitud: 'llvar', largo: 9,  tipo: 'n' },
-      30: { id: 30, nombre: 'Txn Proc Fee',     longitud: 'llvar', largo: 9,  tipo: 'n' },
-      31: { id: 31, nombre: 'Acquirer Fee',     longitud: 'llvar', largo: 9,  tipo: 'n' },
-      32: { id: 32, nombre: 'Acq Inst ID',      longitud: 'llvar', largo: 11, tipo: 'n' },
-      33: { id: 33, nombre: 'Forward Inst ID',  longitud: 'llvar', largo: 11, tipo: 'n' },
-      34: { id: 34, nombre: 'PAN Extended',     longitud: 'llvar', largo: 28, tipo: 'n' },
-      35: { id: 35, nombre: 'Track 2 Data',     longitud: 'llvar', largo: 37, tipo: 'z' },
-      36: { id: 36, nombre: 'Track 3 Data',     longitud: 'lllvar',largo: 104, tipo: 'z' },
-      37: { id: 37, nombre: 'Retrieval Ref',    longitud: 'fija',  largo: 12, tipo: 'an' },
-      38: { id: 38, nombre: 'Auth ID Response', longitud: 'fija',  largo: 6,  tipo: 'an' },
-      39: { id: 39, nombre: 'Response Code',    longitud: 'fija',  largo: 2,  tipo: 'an' },
-      40: { id: 40, nombre: 'Service Restr',    longitud: 'fija',  largo: 3,  tipo: 'an' },
-      41: { id: 41, nombre: 'Card Acceptor Term ID',longitud: 'fija', largo: 8,  tipo: 'an' },
-      42: { id: 42, nombre: 'Card Acceptor ID', longitud: 'fija',  largo: 15, tipo: 'an' },
-      43: { id: 43, nombre: 'Card Acceptor Name/Loc',longitud: 'fija', largo: 40, tipo: 'ans' },
-      44: { id: 44, nombre: 'Add Resp Data',    longitud: 'llvar', largo: 25, tipo: 'an' },
-      45: { id: 45, nombre: 'Track 1 Data',     longitud: 'llvar', largo: 76, tipo: 'z' },
-      46: { id: 46, nombre: 'Add ISO Data',     longitud: 'lllvar',largo: 999, tipo: 'an' },
-      47: { id: 47, nombre: 'Add National Data',longitud: 'lllvar',largo: 999, tipo: 'an' },
-      48: { id: 48, nombre: 'Add Private Data', longitud: 'lllvar',largo: 999, tipo: 'an' },
-      49: { id: 49, nombre: 'Currency Code',    longitud: 'fija',  largo: 3,  tipo: 'n' },
-      50: { id: 50, nombre: 'Settlement Currency',longitud: 'fija', largo: 3,  tipo: 'n' },
-      51: { id: 51, nombre: 'Cardholder Currency',longitud: 'fija', largo: 3,  tipo: 'n' },
-      52: { id: 52, nombre: 'PIN Data',         longitud: 'fija',  largo: 16, tipo: 'b' },
-      53: { id: 53, nombre: 'Security Control', longitud: 'fija',  largo: 16, tipo: 'b' },
-      54: { id: 54, nombre: 'Add Amounts',      longitud: 'lllvar',largo: 120, tipo: 'an' },
-      55: { id: 55, nombre: 'EMV Data',         longitud: 'lllvar',largo: 255, tipo: 'b' },
-      56: { id: 56, nombre: 'Reserved ISO',     longitud: 'lllvar',largo: 999, tipo: 'an' },
-      57: { id: 57, nombre: 'Reserved National',longitud: 'lllvar',largo: 999, tipo: 'an' },
-      58: { id: 58, nombre: 'Reserved Private', longitud: 'lllvar',largo: 999, tipo: 'an' },
-      59: { id: 59, nombre: 'Reserved Private', longitud: 'lllvar',largo: 999, tipo: 'an' },
-      60: { id: 60, nombre: 'Private Use',      longitud: 'lllvar',largo: 999, tipo: 'an' },
-      61: { id: 61, nombre: 'Private Use',      longitud: 'lllvar',largo: 999, tipo: 'an' },
-      62: { id: 62, nombre: 'Private Use',      longitud: 'lllvar',largo: 999, tipo: 'an' },
-      63: { id: 63, nombre: 'Private Use (BBVA Tokens)',longitud: 'lllvar',largo: 999, tipo: 'an' },
-      64: { id: 64, nombre: 'MAC',              longitud: 'fija',  largo: 16, tipo: 'b' },
-    };
-  }
+// src/iso8583.js - Parser ISO 8583 E-Global / BBVA Bancomer
 
+export const EGLOBAL_FIELD_DEFS = {
+  1:   { nombre: 'Bitmap Secundario', format: 'AN F 16', type: 'fija', len: 16 },
+  3:   { nombre: 'Processing Code (Código de Procesamiento)', format: 'N F 6', type: 'fija', len: 6 },
+  4:   { nombre: 'Transaction Amount (Monto)', format: 'N F 12', type: 'fija', len: 12 },
+  5:   { nombre: 'Settlement Amount (Monto Liquidación)', format: 'N F 12', type: 'fija', len: 12 },
+  7:   { nombre: 'Transmission Date and Time (Fecha/Hora Transmisión)', format: 'N F 10', type: 'fija', len: 10 },
+  10:  { nombre: 'Conversion Rate, Cardholder Billing', format: 'N F 8', type: 'fija', len: 8 },
+  11:  { nombre: 'System Trace Audit Number (STAN)', format: 'N F 6', type: 'fija', len: 6 },
+  12:  { nombre: 'Local Transaction Time (Hora Local)', format: 'N F 6', type: 'fija', len: 6 },
+  13:  { nombre: 'Local Transaction Date (Fecha Local)', format: 'N F 4', type: 'fija', len: 4 },
+  15:  { nombre: 'Settlement Date (Fecha Liquidación)', format: 'N F 4', type: 'fija', len: 4 },
+  17:  { nombre: 'Capture Date (Fecha Captura)', format: 'N F 4', type: 'fija', len: 4 },
+  18:  { nombre: 'Merchant Type (Giro del Comercio)', format: 'N F 4', type: 'fija', len: 4 },
+  22:  { nombre: 'Point of Service Entry Mode (Modo de Entrada POS)', format: 'N F 3', type: 'fija', len: 3 },
+  25:  { nombre: 'Point of Service Condition Code', format: 'N F 2', type: 'fija', len: 2 },
+  32:  { nombre: 'Acquiring Institution ID Code', format: 'N V 2:11', type: 'llvar', maxLen: 11 },
+  35:  { nombre: 'Track 2 Data (Banda / Tarjeta)', format: 'ANS V 2:37', type: 'llvar', maxLen: 37 },
+  37:  { nombre: 'Retrieval Reference Number (Folio / RRN)', format: 'AN F 12', type: 'fija', len: 12 },
+  38:  { nombre: 'Authorization Identification Response (Autorización)', format: 'AN F 6', type: 'fija', len: 6 },
+  39:  { nombre: 'Response Code (Código de Respuesta)', format: 'AN F 2', type: 'fija', len: 2 },
+  41:  { nombre: 'Card Acceptor Terminal ID (ID Terminal POS)', format: 'ANS F 16', type: 'fija', len: 16 },
+  43:  { nombre: 'Card Acceptor Name/Location (Nombre y Ubicación Comercio)', format: 'ANS F 40', type: 'fija', len: 40 },
+  44:  { nombre: 'Additional Response Data', format: 'ANS V 2:25', type: 'llvar', maxLen: 25 },
+  45:  { nombre: 'Track 1 Data', format: 'ANS V 2:76', type: 'llvar', maxLen: 76 },
+  48:  { nombre: 'Additional Data - Retailer Data (Afiliación / Datos Comercio)', format: 'ANS V 3:27', type: 'lllvar', maxLen: 999 },
+  49:  { nombre: 'Transaction Currency Code (Moneda)', format: 'N F 3', type: 'fija', len: 3 },
+  50:  { nombre: 'Settlement Currency Code', format: 'N F 3', type: 'fija', len: 3 },
+  52:  { nombre: 'PIN Data (PIN Cifrado)', format: 'AN F 16', type: 'fija', len: 16 },
+  53:  { nombre: 'Security-Related Control Information', format: 'N F 16', type: 'fija', len: 16 },
+  54:  { nombre: 'Additional Amounts', format: 'ANS V 3:12', type: 'lllvar', maxLen: 12 },
+  58:  { nombre: 'Redención de Puntos / Campo 58', format: 'ANS V 3:244', type: 'lllvar', maxLen: 244 },
+  59:  { nombre: 'Datos de Campaña / Campo 59', format: 'ANS V 3:999', type: 'lllvar', maxLen: 999 },
+  60:  { nombre: 'POS Terminal Data', format: 'ANS V 3:16', type: 'lllvar', maxLen: 16 },
+  61:  { nombre: 'POS Card Issuer Category Response Data', format: 'ANS V 3:19', type: 'lllvar', maxLen: 19 },
+  62:  { nombre: 'Postal Code (Código Postal)', format: 'ANS V 3:10', type: 'lllvar', maxLen: 10 },
+  63:  { nombre: 'POS Additional Data (Tokens BBVA)', format: 'ANS V 3:999', type: 'lllvar', maxLen: 999 },
+  70:  { nombre: 'Network Management Information Code', format: 'N F 3', type: 'fija', len: 3 },
+  90:  { nombre: 'Original Data Elements', format: 'ANS F 42', type: 'fija', len: 42 },
+  103: { nombre: 'Account Identification 2', format: 'ANS V 2:28', type: 'llvar', maxLen: 28 },
+  120: { nombre: 'Key Management', format: 'ANS V 3:9', type: 'lllvar', maxLen: 9 },
+  123: { nombre: 'Cryptographic Service Message', format: 'ANS V 3:553', type: 'lllvar', maxLen: 553 },
+  125: { nombre: 'Settlement Data Management Information', format: 'ANS F 15', type: 'fija', len: 15 }
+};
+
+export const MTI_DESCRIPTIONS = {
+  '0200': 'Solicitud de Autorización Financiera (0200)',
+  '0210': 'Respuesta a Solicitud de Autorización (0210)',
+  '0220': 'Notificación de Autorización (Stand-In/Offline)',
+  '0221': 'Notificación de Autorización (Re-envío)',
+  '0230': 'Respuesta a Notificación de Autorización',
+  '0420': 'Solicitud / Notificación de Reverso (0420)',
+  '0421': 'Notificación de Reverso (Re-envío)',
+  '0430': 'Respuesta a Notificación de Reverso (0430)',
+  '0800': 'Solicitud de Administración de Red (Sign-on / Echo)',
+  '0810': 'Respuesta de Administración de Red'
+};
+
+export const RESPONSE_CODE_DESCRIPTIONS = {
+  '00': 'Aprobada (Approved)',
+  '01': 'Referir al Emisor (Refer to card issuer)',
+  '02': 'Referir al Emisor (Refer to card issuer special)',
+  '03': 'Comercio Inválido (Invalid merchant)',
+  '04': 'Retener Tarjeta (Pick-up card)',
+  '05': 'Transacción No Honrada (Do not honor)',
+  '06': 'Error General (Error)',
+  '07': 'Retener Tarjeta (Pick-up card special)',
+  '08': 'Aprobar con ID (Honor with ID)',
+  '12': 'Transacción Inválida (Invalid transaction)',
+  '13': 'Monto Inválido (Invalid amount)',
+  '14': 'Tarjeta Inválida (Invalid card number)',
+  '15': 'Emisor Inexistente (No such issuer)',
+  '19': 'Reintentar Transacción (Re-enter transaction)',
+  '30': 'Error de Formato (Format error)',
+  '39': 'Cuenta de Crédito No Existe (No credit account)',
+  '41': 'Tarjeta Perdida (Lost card)',
+  '43': 'Tarjeta Robada (Stolen card)',
+  '49': 'Reservado para Uso ISO / Proceso Especial',
+  '51': 'Fondos Insuficientes (Not sufficient funds)',
+  '54': 'Tarjeta Expirada (Expired card)',
+  '55': 'PIN Incorrecto (Incorrect PIN)',
+  '57': 'Transacción No Permitida en Tarjeta',
+  '58': 'Transacción No Permitida en Terminal',
+  '61': 'Excede Límite de Retiro',
+  '62': 'Tarjeta Restringida',
+  '68': 'Tiempo de Espera Agotado (Time Out / Late Reply)',
+  '91': 'Switch / Emisor Fuera de Línea (Issuer inoperative)',
+  '96': 'Falla de Sistema (System malfunction)',
+  'B1': 'Transacción Susceptible de Conversión (Campañas/Puntos)'
+};
+
+export class ISO8583Parser {
   hexToBin(hex) {
     return hex.split('').map(h => parseInt(h, 16).toString(2).padStart(4, '0')).join('');
   }
 
-  readLength(msg, pos, type, fieldLargo) {
-      if (type === 'fija') return { len: fieldLargo || 0, pos };
-      if (type === 'llvar') {
-        const len = parseInt(msg.substr(pos, 2), 10);
-        return { len, pos: pos + 2 };
-      }
-      if (type === 'lllvar') {
-        const len = parseInt(msg.substr(pos, 3), 10);
-        return { len, pos: pos + 3 };
-      }
-      return { len: 0, pos };
-    }
-
-  parseBitmap(msg, pos) {
-    let primaryHex = msg.substr(pos, 16);
-    if (primaryHex.length < 16) throw new Error('Bitmap primario incompleto');
-    let bin = this.hexToBin(primaryHex);
-    pos += 16;
-
-    let secondaryBits = '';
-    if (bin[0] === '1') {
-      let secondaryHex = msg.substr(pos, 16);
-      if (secondaryHex.length < 16) throw new Error('Bitmap secundario incompleto');
-      secondaryBits = this.hexToBin(secondaryHex);
-      pos += 16;
-    }
-
-    const fullBitmap = bin + secondaryBits;
-    return { bitmap: fullBitmap, pos, primaryHex, secondaryHex: secondaryBits ? secondaryBits : null };
+  formatBitmap(hexStr) {
+    if (!hexStr) return '';
+    return hexStr.match(/.{1,4}/g)?.join(' ') || hexStr;
   }
 
   parse(isoMessage) {
-    const msg = isoMessage.trim();
-    let pos = 0;
+    if (!isoMessage || typeof isoMessage !== 'string') {
+      return { errors: ['Mensaje vacío o no es cadena de texto'] };
+    }
+
+    const raw = isoMessage.trim();
+    let pos = raw.indexOf('ISO');
+    if (pos === -1) pos = 0;
+    else pos += 3; // Saltar 'ISO'
+
+    const header = raw.substring(pos, pos + 9);
+    pos += 9;
+
+    const mti = raw.substring(pos, pos + 4);
+    pos += 4;
+
+    const primaryBitmapHex = raw.substring(pos, pos + 16);
+    pos += 16;
+
+    let primaryBin = this.hexToBin(primaryBitmapHex);
+    let secondaryBitmapHex = null;
+    let fullBin = primaryBin;
+
+    // Si el bit 1 es '1', hay Bitmap Secundario (16 caracteres hexadecimales más)
+    if (primaryBin[0] === '1') {
+      secondaryBitmapHex = raw.substring(pos, pos + 16);
+      pos += 16;
+      fullBin += this.hexToBin(secondaryBitmapHex);
+    }
+
     const result = {
-      raw: msg,
-      mti: '',
-      bitmap: '',
-      bitmapHex: '',
-      secondaryBitmapHex: null,
+      raw,
+      header,
+      headerParsed: {
+        producto: header.substring(0, 2),
+        release: header.substring(2, 4),
+        estatus: header.substring(4, 7),
+        origen: header.substring(7, 8),
+        responder: header.substring(8, 9)
+      },
+      mti,
+      mtiDescripcion: MTI_DESCRIPTIONS[mti] || `MTI ${mti}`,
+      primaryBitmapHex,
+      secondaryBitmapHex,
+      bitmapBin: fullBin,
       fields: {},
+      field63Tokens: [],
+      field63Parsed: {},
       errors: []
     };
 
-    try {
-      // Buscar "ISO" y extraer MTI real (4 dígitos después de "ISO")
-      let searchPos = msg.indexOf('ISO');
-      if (searchPos === -1) {
-        // Si no hay "ISO", asumir que el mensaje empieza directo con MTI
-        searchPos = 0;
-      } else {
-        searchPos += 3; // Saltar "ISO"
-      }
-      
-      if (msg.length < searchPos + 4) throw new Error('Mensaje muy corto para MTI');
-      result.mti = msg.substr(searchPos, 4);
-      pos = searchPos + 4;
+    for (let i = 0; i < fullBin.length; i++) {
+      if (fullBin[i] === '1') {
+        const fieldNum = i + 1;
+        const def = EGLOBAL_FIELD_DEFS[fieldNum];
 
-      const { bitmap, pos: newPos, primaryHex, secondaryHex } = this.parseBitmap(msg, pos);
-      result.bitmap = bitmap;
-      result.bitmapHex = primaryHex;
-      result.secondaryBitmapHex = secondaryHex;
-      pos = newPos;
-
-      for (let i = 0; i < bitmap.length; i++) {
-        if (bitmap[i] === '1') {
-          const fieldNum = i + 1;
-          const def = this.fieldDefs[fieldNum];
-          if (!def) {
-            result.errors.push(`Campo ${fieldNum} no definido en diccionario`);
-            const { len, pos: newPos2 } = this.readLength(msg, pos, 'lllvar');
-            pos = newPos2 + len;
-            continue;
-          }
-
-          const { len, pos: afterLen } = this.readLength(msg, pos, def.longitud, def.largo);
-          if (pos + len > msg.length) {
-            result.errors.push(`Campo ${fieldNum}: longitud ${len} excede mensaje restante`);
-            break;
-          }
-          const value = msg.substr(pos, len);
-          pos = afterLen + len;
-
-          result.fields[fieldNum] = {
-            id: fieldNum,
-            nombre: def.nombre,
-            valor: value,
-            longitud: len,
-            tipo: def.tipo,
-            longitudTipo: def.longitud
-          };
+        if (!def) {
+          result.errors.push(`Campo ${fieldNum} presente en bitmap pero sin definición en diccionario`);
+          break;
         }
-      }
 
-      if (result.fields[63]) {
-        result.fields[63].subTokens = this.parseField63Tokens(result.fields[63].valor);
-      }
+        let dataLen = 0;
+        let afterLenPos = pos;
 
-      return result;
-    } catch (e) {
-      result.errors.push(`Error parseando: ${e.message}`);
-      return result;
+        if (def.type === 'fija') {
+          dataLen = def.len;
+        } else if (def.type === 'llvar') {
+          const lenStr = raw.substring(pos, pos + 2);
+          dataLen = parseInt(lenStr, 10);
+          afterLenPos = pos + 2;
+        } else if (def.type === 'lllvar') {
+          const lenStr = raw.substring(pos, pos + 3);
+          dataLen = parseInt(lenStr, 10);
+          afterLenPos = pos + 3;
+        }
+
+        if (isNaN(dataLen) || dataLen < 0) {
+          result.errors.push(`Campo ${fieldNum}: longitud inválida "${dataLen}"`);
+          break;
+        }
+
+        const value = raw.substring(afterLenPos, afterLenPos + dataLen);
+        pos = afterLenPos + dataLen;
+
+        result.fields[fieldNum] = {
+          id: fieldNum,
+          nombre: def.nombre,
+          format: def.format,
+          longitud: dataLen,
+          type: def.type,
+          valor: value,
+          descripcionLegible: this.humanizeFieldValue(fieldNum, value)
+        };
+      }
+    }
+
+    // Parsear sub-tokens del Campo 63 si está presente
+    if (result.fields[63]?.valor) {
+      result.field63Tokens = this.parseField63Tokens(result.fields[63].valor);
+    }
+
+    return result;
+  }
+
+  humanizeFieldValue(fieldNum, value) {
+    if (!value) return '';
+    switch (fieldNum) {
+      case 3: {
+        const typeCode = value.substring(0, 2);
+        const mapType = {
+          '00': 'Compra',
+          '09': 'Cash Advance / Compra con Cash Back',
+          '16': 'Consulta de Puntos',
+          '17': 'Dinero Móvil',
+          '18': 'Compra con Puntos',
+          '28': 'Pago de Tarjeta',
+          '40': 'Transferencia',
+          '41': 'Retiro en Corresponsales',
+          '42': 'Situación de Fondos "Retiro sin Tarjeta"',
+          '50': 'Multipago',
+          '92': 'Inicialización de Llaves'
+        };
+        return mapType[typeCode] ? `${value} (${mapType[typeCode]})` : value;
+      }
+      case 4: {
+        const num = parseInt(value, 10);
+        return isNaN(num) ? value : `$${(num / 100).toFixed(2)}`;
+      }
+      case 22: {
+        const mode = value.substring(0, 2);
+        const mapMode = {
+          '00': 'Desconocido',
+          '01': 'Manual (Digitada)',
+          '02': 'Banda Magnética',
+          '05': 'Chip EMV',
+          '10': 'Card on File / Cargos recurrentes',
+          '80': 'Fallback',
+          '90': 'Banda Íntegra al Adquirente',
+          '95': 'Chip Leído CVV No Confiable'
+        };
+        return mapMode[mode] ? `${value} (${mapMode[mode]})` : value;
+      }
+      case 39: {
+        return RESPONSE_CODE_DESCRIPTIONS[value] ? `${value} - ${RESPONSE_CODE_DESCRIPTIONS[value]}` : value;
+      }
+      case 49: {
+        if (value === '484') return '484 (MXN - Peso Mexicano)';
+        if (value === '840') return '840 (USD - Dólar EE.UU.)';
+        return value;
+      }
+      default:
+        return value;
     }
   }
 
   parseField63Tokens(data) {
-      const tokens = [];
-      // Tokens BBVA: ! XX00000 <valor> donde XX = 2-3 chars (Q1, Q2, C0, C4, R7, CE, RJ, 04)
-      const regex = /!\s*([A-Z0-9]{2,3})(\d{5})\s+([^!]*)/g;
-      let match;
+    if (!data) return [];
+    const tokens = [];
+    // tokens BBVA: ! XX00000 <valor> donde XX es el ID de token
+    const regex = /!\s*([A-Z0-9]{2,3})(\d{5})\s+([^!]*)/g;
+    let match;
     while ((match = regex.exec(data)) !== null) {
       const [, id, lenStr, value] = match;
       const len = parseInt(lenStr, 10);
@@ -191,10 +268,6 @@ export class ISO8583Parser {
       tokens.push({ id, longitud: len, valor: cleanValue, raw: match[0] });
     }
     return tokens;
-  }
-
-  formatBitmap(bin) {
-    return bin.match(/.{1,4}/g).join(' ');
   }
 }
 
