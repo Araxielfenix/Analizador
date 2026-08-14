@@ -27,34 +27,36 @@ export class TokenRJParser {
   }
 
   parse(rawValue) {
-    if (!rawValue || rawValue.length < 40) {
-      return { error: `Token RJ muy corto: ${rawValue?.length || 0} chars (esperado 40)` };
+      if (!rawValue || rawValue.length < 38) {
+        return { error: `Token RJ muy corto: ${rawValue?.length || 0} chars (esperado mínimo 38)` };
+      }
+
+      // Formato: RJ.1 (2 chars) + RJ.2 (36 chars UUID) + RJ.3 (2 chars future)
+      // BBVA a veces omite RJ.3 o pone espacio tras RJ.1
+      const rj1 = rawValue.substr(0, 2).trim();
+      const rj2 = rawValue.substr(2, 36).trim();
+      const rj3 = rawValue.length >= 40 ? rawValue.substr(38, 2).trim() : '';
+
+      return {
+        rj1: {
+          raw: rj1,
+          descripcion: this.getRJ1Description(rj1),
+          esMastercard: ['0', '1', '2'].includes(rj1),
+          esVisa: ['0','1','2','3','4','5','6','7','8','9','A','B','D','E','F'].includes(rj1)
+        },
+        rj2: {
+          raw: rj2,
+          descripcion: rj2 ? 'DS-TXN-ID (Directory Server Transaction ID) - MasterCard' : 'No presente (espacios)',
+          esUUID: this.isValidUUID(rj2)
+        },
+        rj3: {
+          raw: rj3,
+          descripcion: rj3 === '  ' || rj3 === '' ? 'Uso futuro (espacios/vacío)' : `Valor: ${rj3}`
+        },
+        valido: true,
+        longitudTotal: rawValue.length
+      };
     }
-
-    const rj1 = rawValue.substr(0, 2).trim();
-    const rj2 = rawValue.substr(2, 36).trim();
-    const rj3 = rawValue.substr(38, 2).trim();
-
-    return {
-      rj1: {
-        raw: rj1,
-        descripcion: this.getRJ1Description(rj1),
-        esMastercard: ['0', '1', '2'].includes(rj1),
-        esVisa: ['0','1','2','3','4','5','6','7','8','9','A','B','D','E','F'].includes(rj1)
-      },
-      rj2: {
-        raw: rj2,
-        descripcion: rj2 ? 'DS-TXN-ID (Directory Server Transaction ID) - MasterCard' : 'No presente (espacios)',
-        esUUID: this.isValidUUID(rj2)
-      },
-      rj3: {
-        raw: rj3,
-        descripcion: rj3 === '  ' || rj3 === '' ? 'Uso futuro (espacios)' : `Valor: ${rj3}`
-      },
-      valido: true,
-      longitudTotal: 40
-    };
-  }
 
   getRJ1Description(code) {
     if (this.mastercardValues[code]) {
@@ -76,7 +78,7 @@ export class TokenRJParser {
     if (parsed.error) return { error: parsed.error };
     return {
       'RJ.1 Protocolo 3DS': `${parsed.rj1.raw} → ${parsed.rj1.descripcion}`,
-      'RJ.2 DS-TXN-ID': parsed.rj2.descripcion + (parsed.rj2.esUUID ? ' �� UUID válido' : ''),
+      'RJ.2 DS-TXN-ID': parsed.rj2.descripcion + (parsed.rj2.esUUID ? ' (UUID valido)' : ''),
       'RJ.3 Usuario': parsed.rj3.descripcion
     };
   }

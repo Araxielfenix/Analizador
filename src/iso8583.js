@@ -74,18 +74,18 @@ export class ISO8583Parser {
     return hex.split('').map(h => parseInt(h, 16).toString(2).padStart(4, '0')).join('');
   }
 
-  readLength(msg, pos, type) {
-    if (type === 'fija') return { len: this.fieldDefs[0]?.largo || 0, pos };
-    if (type === 'llvar') {
-      const len = parseInt(msg.substr(pos, 2), 10);
-      return { len, pos: pos + 2 };
+  readLength(msg, pos, type, fieldLargo) {
+      if (type === 'fija') return { len: fieldLargo || 0, pos };
+      if (type === 'llvar') {
+        const len = parseInt(msg.substr(pos, 2), 10);
+        return { len, pos: pos + 2 };
+      }
+      if (type === 'lllvar') {
+        const len = parseInt(msg.substr(pos, 3), 10);
+        return { len, pos: pos + 3 };
+      }
+      return { len: 0, pos };
     }
-    if (type === 'lllvar') {
-      const len = parseInt(msg.substr(pos, 3), 10);
-      return { len, pos: pos + 3 };
-    }
-    return { len: 0, pos };
-  }
 
   parseBitmap(msg, pos) {
     let primaryHex = msg.substr(pos, 16);
@@ -149,7 +149,7 @@ export class ISO8583Parser {
             continue;
           }
 
-          const { len, pos: afterLen } = this.readLength(msg, pos, def.longitud);
+          const { len, pos: afterLen } = this.readLength(msg, pos, def.longitud, def.largo);
           if (pos + len > msg.length) {
             result.errors.push(`Campo ${fieldNum}: longitud ${len} excede mensaje restante`);
             break;
@@ -180,9 +180,10 @@ export class ISO8583Parser {
   }
 
   parseField63Tokens(data) {
-    const tokens = [];
-    const regex = /!\s*([A-Z0-9]{3})(\d{5})\s+([^!]*)/g;
-    let match;
+      const tokens = [];
+      // Tokens BBVA: ! XX00000 <valor> donde XX = 2-3 chars (Q1, Q2, C0, C4, R7, CE, RJ, 04)
+      const regex = /!\s*([A-Z0-9]{2,3})(\d{5})\s+([^!]*)/g;
+      let match;
     while ((match = regex.exec(data)) !== null) {
       const [, id, lenStr, value] = match;
       const len = parseInt(lenStr, 10);
