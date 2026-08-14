@@ -1,6 +1,7 @@
 // src/analizarIso.js - Versión robusta usando el nuevo parser
 import { iso8583Parser } from './iso8583.js';
 import { parseField63Tokens, parseField63TokensFromString } from './tokens/index.js';
+import { llenarCampos } from './llenarInputs.js';
 
 let lastParsedResult = null;
 
@@ -140,8 +141,7 @@ function llenarCamposDesdeResultado(result) {
   // Folio (campo 37 = Retrieval Ref)
   const folio = result.fields[37]?.valor || '';
 
-  // Llamar a la función original de llenarInputs
-  if (typeof llenarCampos === 'function') {
+  // Llamar a la función de llenarInputs
     llenarCampos(
       codigo1,           // código1 (MTI)
       responseCode,      // código2 (Response Code)
@@ -155,7 +155,7 @@ function llenarCamposDesdeResultado(result) {
       hora1,             // hora1
       hora2              // hora2
     );
-  }
+  
 
   // MOSTRAR TOKEN RJ EN CONSOLA PARA DEBUG
   if (result.field63Parsed?.RJ) {
